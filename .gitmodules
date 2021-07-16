@@ -1,0 +1,3 @@
+[submodule "themes/hexo-theme-relaozi"]
+	path = themes/hexo-theme-relaozi
+	url = https://github.com/guorant/hexo-theme-relaozi.git

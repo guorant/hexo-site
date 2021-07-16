@@ -3,18 +3,58 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
+title: 老子五千言
+subtitle: '山人问道:回归老子'
 description: ''
-keywords:
-author: John Doe
-language: en
+keywords: 
+author: 蚩萸山人
+language: zh-CN
 timezone: ''
+
+# markdown-it
+markdown:
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: true
+    linkify: true
+    typographer: true
+    quotes: '“”‘’'
+  plugins:
+  - markdown-it-abbr # typora not support
+  - markdown-it-ins # ++something++ to <ins>something</ins>  typora not support
+  # - markdown-it-footnote # 会修改注脚标识，不能弹出显示
+  - markdown-it-sub
+  - markdown-it-sup
+  - markdown-it-mark # 有bug：强调的是标点的话，不能正常显示，通过修改markdown-it的/lib/rules_inline/state_inline.js的scanDelims函数修复
+  - markdown-it-katex # 没有本地缓存，使用cloudflare的cdn，使用版本较低
+  - markdown-it-task-checkbox # checkbox有问题，看不到选择的框框
+  # - markdown-it-anchor
+  # - markdown-it-toc-done-right # 和markdown-it-anchor配合使用，默认显示有问题
+  # - markdown-it-table-of-contents # 使用非常规的[[toc]]双括号标识，而不是使用普通的[toc]单括号标识，并且跳转有问题
+  # - markdown-it-toc-and-anchor # 有问题，会报错
+  # anchors:      # 有bug
+  #   # Minimum level for ID creation. (Ex. h2 to h6)
+  #   level: 2
+  #   # A suffix that is prepended to the number given if the ID is repeated.
+  #   collisionSuffix: ''           
+  #   # If `true`, creates an anchor tag with a permalink besides the heading.
+  #   permalink: false              
+  #   # Class used for the permalink anchor tag.
+  #   permalinkClass: header-anchor
+  #   # Set to 'right' to add permalink after heading
+  #   permalinkSide: 'left'
+  #   # The symbol used to make the permalink
+  #   permalinkSymbol: ¶
+  #   # Transform anchor to (1) lower case; (2) upper case
+  #   case: 0
+  #   # Replace space with a character
+  #   separator: '-'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
-permalink: :year/:month/:day/:title/
+url: http://lz5000.com
+permalink: :category/:title/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -62,13 +102,22 @@ prismjs:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 10
+  per_page: 12
   order_by: -date
 
 # Category & Tag
 default_category: uncategorized
 category_map:
 tag_map:
+
+category_generator:
+  order_by: -date
+  # order_exclude:
+  # - '老子章释|大爱弗居,自由民主'
+  order_oneself:
+  - order_by: date
+    category:
+    - '老子章释|大爱弗居,自由民主'
 
 # Metadata elements
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
@@ -85,7 +134,7 @@ updated_option: 'mtime'
 
 # Pagination
 ## Set per_page to 0 to disable pagination
-per_page: 10
+per_page: 12
 pagination_dir: page
 
 # Include / Exclude file(s)
@@ -97,9 +146,65 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: hexo-theme-relaozi
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: 
+    github: https://github.com/lz5000/lz5000.github.io.git
+    coding: https://e.coding.net/zzicncn/lz5000/lz5000.git
+  branch: master
+
+# Search
+## Plugin: https://github.com/wzpan/hexo-generator-search
+search:
+  path: search.xml
+  field: post
+
+# Pinyin
+## Plugin: https://github.com/viko16/hexo-permalink-pinyin
+permalink_pinyin:
+  enable: true
+  separator: '-' # default: '-'
+
+# RSS
+## Plugin: https://github.com/hexojs/hexo-generator-feed
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+
+# i18n
+## Plugin: https://github.com/Jamling/hexo-generator-i18n
+i18n:
+  type: [page, post]
+  generator: [index, archive, category, tag]
+
+# sequence chart
+## Plugin: https://github.com/bubkoo/hexo-filter-sequence
+sequence:
+  raphael: https://cdn.bootcss.com/raphael/2.2.8/raphael.min.js
+  webfont: https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js
+  snap: https://cdn.bootcss.com/snap.svg/0.5.1/snap.svg-min.js
+  underscore: https://cdn.bootcss.com/underscore.js/1.9.1/underscore-min.js
+  sequence: https://cdn.bootcss.com/js-sequence-diagrams/1.0.6/sequence-diagram-min.js
+  # css: # optional, the url for css, such as hand drawn theme 
+  options: 
+    theme: simple
+
+# footnote
+## Plugin: https://github.com/guorant/hexo-footnote
+footnote:
+  location_target_class: location-target
+
+# sup_footnote
+## Plugin: https://github.com/guorant/hexo-sup-footnote
+sup_footnote:
+  location_target_class: location-target
